@@ -88,6 +88,7 @@ int main(void)
   50:	82 b3       	in	r24, 0x12	; 18
   52:	8c 60       	ori	r24, 0x0C	; 12
   54:	82 bb       	out	0x12, r24	; 18
+	//
 
     while (1) 
     {
