@@ -3,44 +3,44 @@ leak_sensor.elf:     file format elf32-avr
 
 Sections:
 Idx Name          Size      VMA       LMA       File off  Algn
-  0 .text         00000196  00000000  00000000  00000094  2**1
+  0 .text         00000262  00000000  00000000  00000094  2**1
                   CONTENTS, ALLOC, LOAD, READONLY, CODE
-  1 .data         00000038  00800060  00000196  0000022a  2**0
+  1 .data         0000001c  00800060  00000262  000002f6  2**0
                   CONTENTS, ALLOC, LOAD, DATA
-  2 .bss          00000002  00800098  00800098  00000262  2**0
+  2 .bss          00000006  0080007c  0080007c  00000312  2**0
                   ALLOC
-  3 .comment      00000030  00000000  00000000  00000262  2**0
+  3 .comment      00000030  00000000  00000000  00000312  2**0
                   CONTENTS, READONLY
-  4 .note.gnu.avr.deviceinfo 00000040  00000000  00000000  00000294  2**2
+  4 .note.gnu.avr.deviceinfo 00000040  00000000  00000000  00000344  2**2
                   CONTENTS, READONLY
-  5 .debug_aranges 00000058  00000000  00000000  000002d4  2**0
+  5 .debug_aranges 00000068  00000000  00000000  00000384  2**0
                   CONTENTS, READONLY, DEBUGGING
-  6 .debug_info   000006bb  00000000  00000000  0000032c  2**0
+  6 .debug_info   00000769  00000000  00000000  000003ec  2**0
                   CONTENTS, READONLY, DEBUGGING
-  7 .debug_abbrev 000005ab  00000000  00000000  000009e7  2**0
+  7 .debug_abbrev 00000608  00000000  00000000  00000b55  2**0
                   CONTENTS, READONLY, DEBUGGING
-  8 .debug_line   00000347  00000000  00000000  00000f92  2**0
+  8 .debug_line   00000407  00000000  00000000  0000115d  2**0
                   CONTENTS, READONLY, DEBUGGING
-  9 .debug_frame  000000d8  00000000  00000000  000012dc  2**2
+  9 .debug_frame  00000120  00000000  00000000  00001564  2**2
                   CONTENTS, READONLY, DEBUGGING
- 10 .debug_str    0000032a  00000000  00000000  000013b4  2**0
+ 10 .debug_str    00000394  00000000  00000000  00001684  2**0
                   CONTENTS, READONLY, DEBUGGING
- 11 .debug_loc    000001f3  00000000  00000000  000016de  2**0
+ 11 .debug_loc    00000258  00000000  00000000  00001a18  2**0
                   CONTENTS, READONLY, DEBUGGING
- 12 .debug_ranges 00000048  00000000  00000000  000018d1  2**0
+ 12 .debug_ranges 00000058  00000000  00000000  00001c70  2**0
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .text:
 
 00000000 <__vectors>:
    0:	14 c0       	rjmp	.+40     	; 0x2a <__ctors_end>
-   2:	2c c0       	rjmp	.+88     	; 0x5c <__bad_interrupt>
-   4:	2b c0       	rjmp	.+86     	; 0x5c <__bad_interrupt>
+   2:	2d c0       	rjmp	.+90     	; 0x5e <__vector_1>
+   4:	60 c0       	rjmp	.+192    	; 0xc6 <__vector_2>
    6:	2a c0       	rjmp	.+84     	; 0x5c <__bad_interrupt>
    8:	29 c0       	rjmp	.+82     	; 0x5c <__bad_interrupt>
    a:	28 c0       	rjmp	.+80     	; 0x5c <__bad_interrupt>
    c:	27 c0       	rjmp	.+78     	; 0x5c <__bad_interrupt>
-   e:	37 c0       	rjmp	.+110    	; 0x7e <__vector_7>
+   e:	69 c0       	rjmp	.+210    	; 0xe2 <__vector_7>
   10:	25 c0       	rjmp	.+74     	; 0x5c <__bad_interrupt>
   12:	24 c0       	rjmp	.+72     	; 0x5c <__bad_interrupt>
   14:	23 c0       	rjmp	.+70     	; 0x5c <__bad_interrupt>
@@ -65,18 +65,18 @@ Disassembly of section .text:
   32:	10 e0       	ldi	r17, 0x00	; 0
   34:	a0 e6       	ldi	r26, 0x60	; 96
   36:	b0 e0       	ldi	r27, 0x00	; 0
-  38:	e6 e9       	ldi	r30, 0x96	; 150
-  3a:	f1 e0       	ldi	r31, 0x01	; 1
+  38:	e2 e6       	ldi	r30, 0x62	; 98
+  3a:	f2 e0       	ldi	r31, 0x02	; 2
   3c:	02 c0       	rjmp	.+4      	; 0x42 <__SREG__+0x3>
   3e:	05 90       	lpm	r0, Z+
   40:	0d 92       	st	X+, r0
-  42:	a8 39       	cpi	r26, 0x98	; 152
+  42:	ac 37       	cpi	r26, 0x7C	; 124
   44:	b1 07       	cpc	r27, r17
   46:	d9 f7       	brne	.-10     	; 0x3e <__SP_L__+0x1>
 
 00000048 <__do_clear_bss>:
   48:	20 e0       	ldi	r18, 0x00	; 0
-  4a:	a8 e9       	ldi	r26, 0x98	; 152
+  4a:	ac e7       	ldi	r26, 0x7C	; 124
   4c:	b0 e0       	ldi	r27, 0x00	; 0
   4e:	01 c0       	rjmp	.+2      	; 0x52 <.do_clear_bss_start>
 
@@ -84,234 +84,287 @@ Disassembly of section .text:
   50:	1d 92       	st	X+, r1
 
 00000052 <.do_clear_bss_start>:
-  52:	aa 39       	cpi	r26, 0x9A	; 154
+  52:	a2 38       	cpi	r26, 0x82	; 130
   54:	b2 07       	cpc	r27, r18
   56:	e1 f7       	brne	.-8      	; 0x50 <.do_clear_bss_loop>
-  58:	59 d0       	rcall	.+178    	; 0x10c <main>
-  5a:	9b c0       	rjmp	.+310    	; 0x192 <_exit>
+  58:	ad d0       	rcall	.+346    	; 0x1b4 <main>
+  5a:	01 c1       	rjmp	.+514    	; 0x25e <_exit>
 
 0000005c <__bad_interrupt>:
   5c:	d1 cf       	rjmp	.-94     	; 0x0 <__vectors>
 
-0000005e <PIN_Init>:
-void USART_Flush( void )
-{
-	while ( UCSRA & (1<<RXC) ) {
-		unsigned char dummy = UDR;
-	}
-}
-  5e:	8a b3       	in	r24, 0x1a	; 26
-  60:	83 60       	ori	r24, 0x03	; 3
-  62:	8a bb       	out	0x1a, r24	; 26
-  64:	8b b3       	in	r24, 0x1b	; 27
-  66:	8e 7f       	andi	r24, 0xFE	; 254
-  68:	8b bb       	out	0x1b, r24	; 27
-  6a:	8b b3       	in	r24, 0x1b	; 27
-  6c:	82 60       	ori	r24, 0x02	; 2
-  6e:	8b bb       	out	0x1b, r24	; 27
-  70:	81 b3       	in	r24, 0x11	; 17
-  72:	83 7f       	andi	r24, 0xF3	; 243
-  74:	81 bb       	out	0x11, r24	; 17
-  76:	82 b3       	in	r24, 0x12	; 18
-  78:	8c 60       	ori	r24, 0x0C	; 12
-  7a:	82 bb       	out	0x12, r24	; 18
-  7c:	08 95       	ret
-
-0000007e <__vector_7>:
-  7e:	1f 92       	push	r1
-  80:	0f 92       	push	r0
-  82:	0f b6       	in	r0, 0x3f	; 63
-  84:	0f 92       	push	r0
-  86:	11 24       	eor	r1, r1
-  88:	8f 93       	push	r24
-  8a:	9f 93       	push	r25
-  8c:	8c b1       	in	r24, 0x0c	; 12
-  8e:	90 e0       	ldi	r25, 0x00	; 0
-  90:	90 93 99 00 	sts	0x0099, r25	; 0x800099 <__data_end+0x1>
-  94:	80 93 98 00 	sts	0x0098, r24	; 0x800098 <__data_end>
-  98:	9f 91       	pop	r25
-  9a:	8f 91       	pop	r24
-  9c:	0f 90       	pop	r0
-  9e:	0f be       	out	0x3f, r0	; 63
-  a0:	0f 90       	pop	r0
-  a2:	1f 90       	pop	r1
-  a4:	18 95       	reti
-
-000000a6 <UART_Init>:
-  a6:	92 b9       	out	0x02, r25	; 2
-  a8:	89 b9       	out	0x09, r24	; 9
-  aa:	88 e1       	ldi	r24, 0x18	; 24
-  ac:	8a b9       	out	0x0a, r24	; 10
-  ae:	8e e0       	ldi	r24, 0x0E	; 14
-  b0:	83 b9       	out	0x03, r24	; 3
-  b2:	8a b1       	in	r24, 0x0a	; 10
-  b4:	80 68       	ori	r24, 0x80	; 128
-  b6:	8a b9       	out	0x0a, r24	; 10
-  b8:	78 94       	sei
-  ba:	08 95       	ret
-
-000000bc <UART_Transmit>:
-  bc:	5d 9b       	sbis	0x0b, 5	; 11
-  be:	fe cf       	rjmp	.-4      	; 0xbc <UART_Transmit>
-  c0:	8c b9       	out	0x0c, r24	; 12
-  c2:	08 95       	ret
-
-000000c4 <send_message>:
-
-void send_message(char* message){
-  c4:	ef 92       	push	r14
-  c6:	ff 92       	push	r15
-  c8:	0f 93       	push	r16
-  ca:	1f 93       	push	r17
-  cc:	cf 93       	push	r28
-  ce:	df 93       	push	r29
-  d0:	7c 01       	movw	r14, r24
-	int length = strlen(message);
-  d2:	fc 01       	movw	r30, r24
-  d4:	01 90       	ld	r0, Z+
-  d6:	00 20       	and	r0, r0
-  d8:	e9 f7       	brne	.-6      	; 0xd4 <send_message+0x10>
-  da:	31 97       	sbiw	r30, 0x01	; 1
-  dc:	8f 01       	movw	r16, r30
-  de:	08 1b       	sub	r16, r24
-  e0:	19 0b       	sbc	r17, r25
-	for (int i = 0; i < length; i++) {
-  e2:	c0 e0       	ldi	r28, 0x00	; 0
-  e4:	d0 e0       	ldi	r29, 0x00	; 0
-  e6:	06 c0       	rjmp	.+12     	; 0xf4 <__stack+0x15>
-		UART_Transmit(message[i]);
-  e8:	f7 01       	movw	r30, r14
-  ea:	ec 0f       	add	r30, r28
-  ec:	fd 1f       	adc	r31, r29
-  ee:	80 81       	ld	r24, Z
-  f0:	e5 df       	rcall	.-54     	; 0xbc <UART_Transmit>
-	}
-}
-
-void send_message(char* message){
-	int length = strlen(message);
-	for (int i = 0; i < length; i++) {
-  f2:	21 96       	adiw	r28, 0x01	; 1
-  f4:	c0 17       	cp	r28, r16
-  f6:	d1 07       	cpc	r29, r17
-  f8:	bc f3       	brlt	.-18     	; 0xe8 <__stack+0x9>
+0000005e <__vector_1>:
 		UART_Transmit(message[i]);
 	};
 	UART_Transmit('\n');
-  fa:	8a e0       	ldi	r24, 0x0A	; 10
-  fc:	df df       	rcall	.-66     	; 0xbc <UART_Transmit>
 }
-  fe:	df 91       	pop	r29
- 100:	cf 91       	pop	r28
- 102:	1f 91       	pop	r17
- 104:	0f 91       	pop	r16
- 106:	ff 90       	pop	r15
- 108:	ef 90       	pop	r14
- 10a:	08 95       	ret
 
-0000010c <main>:
+void BT_Transmit(int state){
+  5e:	1f 92       	push	r1
+  60:	0f 92       	push	r0
+  62:	0f b6       	in	r0, 0x3f	; 63
+  64:	0f 92       	push	r0
+  66:	11 24       	eor	r1, r1
+  68:	2f 93       	push	r18
+  6a:	8f 93       	push	r24
+  6c:	9f 93       	push	r25
+  6e:	10 92 7f 00 	sts	0x007F, r1	; 0x80007f <stop_key+0x1>
+  72:	10 92 7e 00 	sts	0x007E, r1	; 0x80007e <stop_key>
+  76:	88 ec       	ldi	r24, 0xC8	; 200
+  78:	90 e0       	ldi	r25, 0x00	; 0
+  7a:	90 93 81 00 	sts	0x0081, r25	; 0x800081 <counter+0x1>
+  7e:	80 93 80 00 	sts	0x0080, r24	; 0x800080 <counter>
+  82:	82 99       	sbic	0x10, 2	; 16
+  84:	07 c0       	rjmp	.+14     	; 0x94 <__DATA_REGION_LENGTH__+0x14>
+  86:	81 e0       	ldi	r24, 0x01	; 1
+  88:	90 e0       	ldi	r25, 0x00	; 0
+  8a:	90 93 7d 00 	sts	0x007D, r25	; 0x80007d <__data_end+0x1>
+  8e:	80 93 7c 00 	sts	0x007C, r24	; 0x80007c <__data_end>
+  92:	04 c0       	rjmp	.+8      	; 0x9c <__DATA_REGION_LENGTH__+0x1c>
+  94:	10 92 7d 00 	sts	0x007D, r1	; 0x80007d <__data_end+0x1>
+  98:	10 92 7c 00 	sts	0x007C, r1	; 0x80007c <__data_end>
+  9c:	95 b7       	in	r25, 0x35	; 53
+  9e:	81 e0       	ldi	r24, 0x01	; 1
+  a0:	89 27       	eor	r24, r25
+  a2:	85 bf       	out	0x35, r24	; 53
+  a4:	2f e9       	ldi	r18, 0x9F	; 159
+  a6:	86 e8       	ldi	r24, 0x86	; 134
+  a8:	91 e0       	ldi	r25, 0x01	; 1
+  aa:	21 50       	subi	r18, 0x01	; 1
+  ac:	80 40       	sbci	r24, 0x00	; 0
+  ae:	90 40       	sbci	r25, 0x00	; 0
+  b0:	e1 f7       	brne	.-8      	; 0xaa <__DATA_REGION_LENGTH__+0x2a>
+  b2:	00 c0       	rjmp	.+0      	; 0xb4 <__DATA_REGION_LENGTH__+0x34>
+  b4:	00 00       	nop
+  b6:	9f 91       	pop	r25
+  b8:	8f 91       	pop	r24
+  ba:	2f 91       	pop	r18
+  bc:	0f 90       	pop	r0
+  be:	0f be       	out	0x3f, r0	; 63
+  c0:	0f 90       	pop	r0
+  c2:	1f 90       	pop	r1
+  c4:	18 95       	reti
+
+000000c6 <__vector_2>:
+  c6:	1f 92       	push	r1
+  c8:	0f 92       	push	r0
+  ca:	0f b6       	in	r0, 0x3f	; 63
+  cc:	0f 92       	push	r0
+  ce:	11 24       	eor	r1, r1
+  d0:	10 92 7d 00 	sts	0x007D, r1	; 0x80007d <__data_end+0x1>
+  d4:	10 92 7c 00 	sts	0x007C, r1	; 0x80007c <__data_end>
+  d8:	0f 90       	pop	r0
+  da:	0f be       	out	0x3f, r0	; 63
+  dc:	0f 90       	pop	r0
+  de:	1f 90       	pop	r1
+  e0:	18 95       	reti
+
+000000e2 <__vector_7>:
+  e2:	1f 92       	push	r1
+  e4:	0f 92       	push	r0
+  e6:	0f b6       	in	r0, 0x3f	; 63
+  e8:	0f 92       	push	r0
+  ea:	11 24       	eor	r1, r1
+  ec:	8f 93       	push	r24
+  ee:	9f 93       	push	r25
+  f0:	8c b1       	in	r24, 0x0c	; 12
+  f2:	90 e0       	ldi	r25, 0x00	; 0
+  f4:	90 93 7f 00 	sts	0x007F, r25	; 0x80007f <stop_key+0x1>
+  f8:	80 93 7e 00 	sts	0x007E, r24	; 0x80007e <stop_key>
+  fc:	9f 91       	pop	r25
+  fe:	8f 91       	pop	r24
+ 100:	0f 90       	pop	r0
+ 102:	0f be       	out	0x3f, r0	; 63
+ 104:	0f 90       	pop	r0
+ 106:	1f 90       	pop	r1
+ 108:	18 95       	reti
+
+0000010a <PIN_Init>:
+ 10a:	8b b7       	in	r24, 0x3b	; 59
+ 10c:	80 64       	ori	r24, 0x40	; 64
+ 10e:	8b bf       	out	0x3b, r24	; 59
+ 110:	85 b7       	in	r24, 0x35	; 53
+ 112:	8e 7f       	andi	r24, 0xFE	; 254
+ 114:	85 bf       	out	0x35, r24	; 53
+ 116:	85 b7       	in	r24, 0x35	; 53
+ 118:	82 60       	ori	r24, 0x02	; 2
+ 11a:	85 bf       	out	0x35, r24	; 53
+ 11c:	8f b7       	in	r24, 0x3f	; 63
+ 11e:	80 68       	ori	r24, 0x80	; 128
+ 120:	8f bf       	out	0x3f, r24	; 63
+ 122:	81 b3       	in	r24, 0x11	; 17
+ 124:	8d 7f       	andi	r24, 0xFD	; 253
+ 126:	81 bb       	out	0x11, r24	; 17
+ 128:	88 b3       	in	r24, 0x18	; 24
+ 12a:	82 60       	ori	r24, 0x02	; 2
+ 12c:	88 bb       	out	0x18, r24	; 24
+ 12e:	8a b3       	in	r24, 0x1a	; 26
+ 130:	83 60       	ori	r24, 0x03	; 3
+ 132:	8a bb       	out	0x1a, r24	; 26
+ 134:	8b b3       	in	r24, 0x1b	; 27
+ 136:	8e 7f       	andi	r24, 0xFE	; 254
+ 138:	8b bb       	out	0x1b, r24	; 27
+ 13a:	8b b3       	in	r24, 0x1b	; 27
+ 13c:	82 60       	ori	r24, 0x02	; 2
+ 13e:	8b bb       	out	0x1b, r24	; 27
+ 140:	81 b3       	in	r24, 0x11	; 17
+ 142:	83 7f       	andi	r24, 0xF3	; 243
+ 144:	81 bb       	out	0x11, r24	; 17
+ 146:	82 b3       	in	r24, 0x12	; 18
+ 148:	8c 60       	ori	r24, 0x0C	; 12
+ 14a:	82 bb       	out	0x12, r24	; 18
+ 14c:	08 95       	ret
+
+0000014e <UART_Init>:
+ 14e:	92 b9       	out	0x02, r25	; 2
+ 150:	89 b9       	out	0x09, r24	; 9
+ 152:	88 e1       	ldi	r24, 0x18	; 24
+ 154:	8a b9       	out	0x0a, r24	; 10
+ 156:	8e e0       	ldi	r24, 0x0E	; 14
+ 158:	83 b9       	out	0x03, r24	; 3
+ 15a:	8a b1       	in	r24, 0x0a	; 10
+ 15c:	80 68       	ori	r24, 0x80	; 128
+ 15e:	8a b9       	out	0x0a, r24	; 10
+ 160:	78 94       	sei
+ 162:	08 95       	ret
+
+00000164 <UART_Transmit>:
+ 164:	5d 9b       	sbis	0x0b, 5	; 11
+ 166:	fe cf       	rjmp	.-4      	; 0x164 <UART_Transmit>
+ 168:	8c b9       	out	0x0c, r24	; 12
+ 16a:	08 95       	ret
+
+0000016c <send_message>:
+ 16c:	ef 92       	push	r14
+ 16e:	ff 92       	push	r15
+ 170:	0f 93       	push	r16
+ 172:	1f 93       	push	r17
+ 174:	cf 93       	push	r28
+ 176:	df 93       	push	r29
+ 178:	7c 01       	movw	r14, r24
+ 17a:	fc 01       	movw	r30, r24
+ 17c:	01 90       	ld	r0, Z+
+ 17e:	00 20       	and	r0, r0
+ 180:	e9 f7       	brne	.-6      	; 0x17c <send_message+0x10>
+ 182:	31 97       	sbiw	r30, 0x01	; 1
+ 184:	8f 01       	movw	r16, r30
+ 186:	08 1b       	sub	r16, r24
+ 188:	19 0b       	sbc	r17, r25
+ 18a:	c0 e0       	ldi	r28, 0x00	; 0
+ 18c:	d0 e0       	ldi	r29, 0x00	; 0
+ 18e:	06 c0       	rjmp	.+12     	; 0x19c <send_message+0x30>
+ 190:	f7 01       	movw	r30, r14
+ 192:	ec 0f       	add	r30, r28
+ 194:	fd 1f       	adc	r31, r29
+ 196:	80 81       	ld	r24, Z
+ 198:	e5 df       	rcall	.-54     	; 0x164 <UART_Transmit>
+ 19a:	21 96       	adiw	r28, 0x01	; 1
+ 19c:	c0 17       	cp	r28, r16
+ 19e:	d1 07       	cpc	r29, r17
+ 1a0:	bc f3       	brlt	.-18     	; 0x190 <send_message+0x24>
+ 1a2:	8a e0       	ldi	r24, 0x0A	; 10
+ 1a4:	df df       	rcall	.-66     	; 0x164 <UART_Transmit>
+ 1a6:	df 91       	pop	r29
+ 1a8:	cf 91       	pop	r28
+ 1aa:	1f 91       	pop	r17
+ 1ac:	0f 91       	pop	r16
+ 1ae:	ff 90       	pop	r15
+ 1b0:	ef 90       	pop	r14
+ 1b2:	08 95       	ret
+
+000001b4 <main>:
+//	_delay_ms(2000);
+
+}
 
 int main(void)
 {
- 10c:	cf 93       	push	r28
- 10e:	df 93       	push	r29
- 110:	cd b7       	in	r28, 0x3d	; 61
- 112:	dd 27       	eor	r29, r29
- 114:	c4 50       	subi	r28, 0x04	; 4
- 116:	cd bf       	out	0x3d, r28	; 61
+ 1b4:	cf 93       	push	r28
+ 1b6:	df 93       	push	r29
+ 1b8:	cd b7       	in	r28, 0x3d	; 61
+ 1ba:	dd 27       	eor	r29, r29
+ 1bc:	c4 50       	subi	r28, 0x04	; 4
+ 1be:	cd bf       	out	0x3d, r28	; 61
 	PIN_Init();
- 118:	a2 df       	rcall	.-188    	; 0x5e <PIN_Init>
+ 1c0:	a4 df       	rcall	.-184    	; 0x10a <PIN_Init>
 	UART_Init(BAUDRATE);
- 11a:	8c e0       	ldi	r24, 0x0C	; 12
- 11c:	90 e0       	ldi	r25, 0x00	; 0
- 11e:	c3 df       	rcall	.-122    	; 0xa6 <UART_Init>
-	
-	char* response[2] = {"Leak is detected!", "No leak!"};
- 120:	80 e6       	ldi	r24, 0x60	; 96
- 122:	90 e0       	ldi	r25, 0x00	; 0
- 124:	9a 83       	std	Y+2, r25	; 0x02
- 126:	89 83       	std	Y+1, r24	; 0x01
- 128:	82 e7       	ldi	r24, 0x72	; 114
- 12a:	90 e0       	ldi	r25, 0x00	; 0
- 12c:	9c 83       	std	Y+4, r25	; 0x04
- 12e:	8b 83       	std	Y+3, r24	; 0x03
-	int i = 0;
-	int counter = WAIT;
- 130:	00 e4       	ldi	r16, 0x40	; 64
- 132:	12 e4       	ldi	r17, 0x42	; 66
-{
-	PIN_Init();
-	UART_Init(BAUDRATE);
-	
-	char* response[2] = {"Leak is detected!", "No leak!"};
-	int i = 0;
- 134:	e1 2c       	mov	r14, r1
- 136:	f1 2c       	mov	r15, r1
-	int counter = WAIT;
-	
-    while (1) 
-    {
-		PORTA ^= ((1<<0) | (1<<1));
- 138:	9b b3       	in	r25, 0x1b	; 27
- 13a:	83 e0       	ldi	r24, 0x03	; 3
- 13c:	89 27       	eor	r24, r25
- 13e:	8b bb       	out	0x1b, r24	; 27
-		if (stop_key == '1' || counter <= 0) {
- 140:	80 91 98 00 	lds	r24, 0x0098	; 0x800098 <__data_end>
- 144:	90 91 99 00 	lds	r25, 0x0099	; 0x800099 <__data_end+0x1>
- 148:	c1 97       	sbiw	r24, 0x31	; 49
- 14a:	19 f0       	breq	.+6      	; 0x152 <main+0x46>
- 14c:	10 16       	cp	r1, r16
- 14e:	11 06       	cpc	r1, r17
- 150:	ec f0       	brlt	.+58     	; 0x18c <main+0x80>
-			send_message(response[i]);
- 152:	f7 01       	movw	r30, r14
- 154:	ee 0f       	add	r30, r30
- 156:	ff 1f       	adc	r31, r31
- 158:	81 e0       	ldi	r24, 0x01	; 1
- 15a:	90 e0       	ldi	r25, 0x00	; 0
- 15c:	8c 0f       	add	r24, r28
- 15e:	9d 1f       	adc	r25, r29
- 160:	e8 0f       	add	r30, r24
- 162:	f9 1f       	adc	r31, r25
- 164:	80 81       	ld	r24, Z
- 166:	91 81       	ldd	r25, Z+1	; 0x01
- 168:	ad df       	rcall	.-166    	; 0xc4 <send_message>
-			i++;
- 16a:	9f ef       	ldi	r25, 0xFF	; 255
- 16c:	e9 1a       	sub	r14, r25
- 16e:	f9 0a       	sbc	r15, r25
-			if (i > 1) {
- 170:	82 e0       	ldi	r24, 0x02	; 2
- 172:	e8 16       	cp	r14, r24
- 174:	f1 04       	cpc	r15, r1
- 176:	14 f0       	brlt	.+4      	; 0x17c <main+0x70>
-				i = 0;
- 178:	e1 2c       	mov	r14, r1
- 17a:	f1 2c       	mov	r15, r1
+ 1c2:	8c e0       	ldi	r24, 0x0C	; 12
+ 1c4:	90 e0       	ldi	r25, 0x00	; 0
+ 1c6:	c3 df       	rcall	.-122    	; 0x14e <UART_Init>
+	char* response[2] = {"No leak!", "Leak is detected!"};
+ 1c8:	80 e6       	ldi	r24, 0x60	; 96
+ 1ca:	90 e0       	ldi	r25, 0x00	; 0
+ 1cc:	9a 83       	std	Y+2, r25	; 0x02
+ 1ce:	89 83       	std	Y+1, r24	; 0x01
+ 1d0:	89 e6       	ldi	r24, 0x69	; 105
+ 1d2:	90 e0       	ldi	r25, 0x00	; 0
+ 1d4:	9c 83       	std	Y+4, r25	; 0x04
+ 1d6:	8b 83       	std	Y+3, r24	; 0x03
+	while (1){
+	//	PORTA ^= ((1<<0) | (1<<1));
+		if (leak == 0 || leak == 1){
+ 1d8:	80 91 7c 00 	lds	r24, 0x007C	; 0x80007c <__data_end>
+ 1dc:	90 91 7d 00 	lds	r25, 0x007D	; 0x80007d <__data_end+0x1>
+ 1e0:	82 30       	cpi	r24, 0x02	; 2
+ 1e2:	91 05       	cpc	r25, r1
+ 1e4:	c8 f7       	brcc	.-14     	; 0x1d8 <main+0x24>
+			if (stop_key != '1' && counter == WAIT) {
+ 1e6:	20 91 7e 00 	lds	r18, 0x007E	; 0x80007e <stop_key>
+ 1ea:	30 91 7f 00 	lds	r19, 0x007F	; 0x80007f <stop_key+0x1>
+ 1ee:	21 33       	cpi	r18, 0x31	; 49
+ 1f0:	31 05       	cpc	r19, r1
+ 1f2:	f9 f0       	breq	.+62     	; 0x232 <main+0x7e>
+ 1f4:	20 91 80 00 	lds	r18, 0x0080	; 0x800080 <counter>
+ 1f8:	30 91 81 00 	lds	r19, 0x0081	; 0x800081 <counter+0x1>
+ 1fc:	28 3c       	cpi	r18, 0xC8	; 200
+ 1fe:	31 05       	cpc	r19, r1
+ 200:	c1 f4       	brne	.+48     	; 0x232 <main+0x7e>
+				send_message(response[leak]);
+ 202:	88 0f       	add	r24, r24
+ 204:	99 1f       	adc	r25, r25
+ 206:	e1 e0       	ldi	r30, 0x01	; 1
+ 208:	f0 e0       	ldi	r31, 0x00	; 0
+ 20a:	ec 0f       	add	r30, r28
+ 20c:	fd 1f       	adc	r31, r29
+ 20e:	e8 0f       	add	r30, r24
+ 210:	f9 1f       	adc	r31, r25
+ 212:	80 81       	ld	r24, Z
+ 214:	91 81       	ldd	r25, Z+1	; 0x01
+ 216:	aa df       	rcall	.-172    	; 0x16c <send_message>
+				if (counter <= 0) {
+ 218:	80 91 80 00 	lds	r24, 0x0080	; 0x800080 <counter>
+ 21c:	90 91 81 00 	lds	r25, 0x0081	; 0x800081 <counter+0x1>
+ 220:	18 16       	cp	r1, r24
+ 222:	19 06       	cpc	r1, r25
+ 224:	34 f0       	brlt	.+12     	; 0x232 <main+0x7e>
+					counter = WAIT;
+ 226:	88 ec       	ldi	r24, 0xC8	; 200
+ 228:	90 e0       	ldi	r25, 0x00	; 0
+ 22a:	90 93 81 00 	sts	0x0081, r25	; 0x800081 <counter+0x1>
+ 22e:	80 93 80 00 	sts	0x0080, r24	; 0x800080 <counter>
+				}
 			}
-			if (counter <= 0) {
- 17c:	10 16       	cp	r1, r16
- 17e:	11 06       	cpc	r1, r17
- 180:	2c f0       	brlt	.+10     	; 0x18c <main+0x80>
-				send_message("counter is less than zero..");
- 182:	8b e7       	ldi	r24, 0x7B	; 123
- 184:	90 e0       	ldi	r25, 0x00	; 0
- 186:	9e df       	rcall	.-196    	; 0xc4 <send_message>
-				counter = WAIT;
- 188:	00 e4       	ldi	r16, 0x40	; 64
- 18a:	12 e4       	ldi	r17, 0x42	; 66
+			if (stop_key == '1') {
+ 232:	80 91 7e 00 	lds	r24, 0x007E	; 0x80007e <stop_key>
+ 236:	90 91 7f 00 	lds	r25, 0x007F	; 0x80007f <stop_key+0x1>
+ 23a:	c1 97       	sbiw	r24, 0x31	; 49
+ 23c:	31 f4       	brne	.+12     	; 0x24a <main+0x96>
+				leak = -1;
+ 23e:	8f ef       	ldi	r24, 0xFF	; 255
+ 240:	9f ef       	ldi	r25, 0xFF	; 255
+ 242:	90 93 7d 00 	sts	0x007D, r25	; 0x80007d <__data_end+0x1>
+ 246:	80 93 7c 00 	sts	0x007C, r24	; 0x80007c <__data_end>
 			}
-			
-		}
-		counter--;
- 18c:	01 50       	subi	r16, 0x01	; 1
- 18e:	11 09       	sbc	r17, r1
-    }
- 190:	d3 cf       	rjmp	.-90     	; 0x138 <main+0x2c>
+			counter--;
+ 24a:	80 91 80 00 	lds	r24, 0x0080	; 0x800080 <counter>
+ 24e:	90 91 81 00 	lds	r25, 0x0081	; 0x800081 <counter+0x1>
+ 252:	01 97       	sbiw	r24, 0x01	; 1
+ 254:	90 93 81 00 	sts	0x0081, r25	; 0x800081 <counter+0x1>
+ 258:	80 93 80 00 	sts	0x0080, r24	; 0x800080 <counter>
+ 25c:	bd cf       	rjmp	.-134    	; 0x1d8 <main+0x24>
 
-00000192 <_exit>:
- 192:	f8 94       	cli
+0000025e <_exit>:
+ 25e:	f8 94       	cli
 
-00000194 <__stop_program>:
- 194:	ff cf       	rjmp	.-2      	; 0x194 <__stop_program>
+00000260 <__stop_program>:
+ 260:	ff cf       	rjmp	.-2      	; 0x260 <__stop_program>

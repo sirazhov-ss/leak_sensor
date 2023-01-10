@@ -1,8 +1,6 @@
 #define F_CPU 1000000UL
 #define BAUDRATE (F_CPU/(16*4800L))-1
-#define INT_LEAK (PIND&(1<<PD2))
-#define INT_LB (PIND&(1<<PD3))
-#define WAIT 1000000UL
+#define WAIT 200
 
 #include <avr/io.h>
 #include <string.h>
@@ -10,8 +8,38 @@
 #include <avr/interrupt.h>
 
 int stop_key = 0;
+int leak = 0;
+int counter;
+int INT_counter = 0;
+
+ISR(INT0_vect){
+	stop_key = 0;
+	counter = WAIT;
+	if (~PIND & (1<<2)) {
+		leak = 1;
+	}
+	else {
+		leak = 0;
+	}
+	MCUCR ^= (1<<0);
+	_delay_ms(500);
+}
+
+ISR(INT1_vect){
+	leak = 0;
+}
+
+ISR(USART_RX_vect){
+	stop_key = UDR;
+}
 
 void PIN_Init(void){
+	GIMSK |= (1<<6);
+	MCUCR &= ~(1<<0);
+	MCUCR |= (1<<1);
+	SREG |= (1<<7);
+	DDRD &= ~(1<<1);
+	PORTB |= (1<<1);
 	DDRA |= ((1<<0) | (1<<1));
 	PORTA &= ~(1<<0);
 	PORTA |= (1<<1);
@@ -19,9 +47,6 @@ void PIN_Init(void){
 	PORTD |= ((1<<2) | (1<<3));
 }
 
-ISR(USART_RX_vect){
-	stop_key = UDR;
-}
 
 void UART_Init(unsigned int baud){
 	UBRRH = (unsigned char)(baud>>8);
@@ -42,13 +67,6 @@ unsigned char UART_Receive(void){
 	return UDR;
 }
 
-void USART_Flush( void )
-{
-	while ( UCSRA & (1<<RXC) ) {
-		unsigned char dummy = UDR;
-	}
-}
-
 void send_message(char* message){
 	int length = strlen(message);
 	for (int i = 0; i < length; i++) {
@@ -57,31 +75,30 @@ void send_message(char* message){
 	UART_Transmit('\n');
 }
 
+void BT_Transmit(int state){
+//	_delay_ms(2000);
+
+}
+
 int main(void)
 {
 	PIN_Init();
 	UART_Init(BAUDRATE);
-	
-	char* response[2] = {"Leak is detected!", "No leak!"};
-	int i = 0;
-	int counter = WAIT;
-	
-    while (1) 
-    {
-		PORTA ^= ((1<<0) | (1<<1));
-		if (stop_key == '1' || counter <= 0) {
-			send_message(response[i]);
-			i++;
-			if (i > 1) {
-				i = 0;
+	char* response[2] = {"No leak!", "Leak is detected!"};
+	while (1){
+	//	PORTA ^= ((1<<0) | (1<<1));
+		if (leak == 0 || leak == 1){
+			if (stop_key != '1' && counter == WAIT) {
+				send_message(response[leak]);
+				if (counter <= 0) {
+					counter = WAIT;
+				}
 			}
-			if (counter <= 0) {
-				send_message("counter is less than zero..");
-				counter = WAIT;
+			if (stop_key == '1') {
+				leak = -1;
 			}
-			
-		}
-		counter--;
-    }
+			counter--;
+		}			
+	}
 }
 
