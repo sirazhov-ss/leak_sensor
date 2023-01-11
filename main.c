@@ -14,20 +14,15 @@ int counter;
 
 
 void PIN_Init(void){
-	GIMSK |= (1<<6);
-	MCUCR &= ~(1<<0);
-	MCUCR |= (1<<1);
-	
-	GIMSK |= (1<<7);
-	MCUCR |= (1<<2) | (1<<3);
-	
-	SREG |= (1<<7);
-
-	DDRD &= ~((1<<2) | (1<<3));
-	PORTD |= ((1<<2) | (1<<3));
-	
-	DDRA |= ((1<<0) | (1<<1));
-	PORTA &= ~((1<<0) | (1<<1));
+	GIMSK |= 1<<INT0;
+	MCUCR |= (1<<ISC01);
+	MCUCR &= ~(1<<ISC00);
+	GIMSK |= 1<<INT1;
+	MCUCR |= (1<<ISC11) | (1<<ISC10);		
+	DDRD &= ~((1<<DDD3) | (1<<DDD2));
+	PORTD |= ((1<<PORTD3) | (1<<PORTD2));	
+	DDRA |= ((1<<DDA1) | (1<<DDA0));
+	PORTA &= ~((1<<PORTA1) | (1<<PORTA0));
 }
 
 
@@ -58,13 +53,13 @@ void send_message(char* message){
 	UART_Transmit('\n');
 }
 void BT_ON(void){
-	_delay_ms(1000);
-	PORTA |= ((1<<0) | (1<<1));
+	_delay_ms(1000);;
+	PORTA |= ((1<<PORTA1) | (1<<PORTA0));
 	
 }
 
 void BT_OFF(void){
-	PORTA &= ~((1<<0) | (1<<1));
+	PORTA &= ~((1<<PORTA1) | (1<<PORTA0));
 }
 
 ISR(INT0_vect){
@@ -72,11 +67,11 @@ ISR(INT0_vect){
 	counter = WAIT;
 	if (~PIND & (1<<2)) {
 		leak = 1;
-		MCUCR |= (1<<0);
+		MCUCR |= 1<<ISC00;
 	}
 	else {
 		leak = 0;
-		MCUCR &= ~(1<<0);
+		MCUCR &= ~(1<<ISC00);
 	}
 	BT_ON();
 }
@@ -112,12 +107,15 @@ int main(void)
 					counter = WAIT;
 				}
 			}
+			counter--;
 			if (stop_key == '1') {
 				BT_OFF();
 				leak = -1;
 				lb = 0;
+//				MCUCR |= 1<<SE;
+//				MCUCR |= (1<<SM1) | (1<<SM0);
+//				asm("sleep");
 			}
-			counter--;
 		}			
 	}
 }
