@@ -1,0 +1,108 @@
+Removed Pin From Net: NetName=GND Pin=R1-1
+Removed Pin From Net: NetName=NetR1_2 Pin=R2-1
+Removed Pin From Net: NetName=NetP2_1 Pin=R3-1
+Removed Pin From Net: NetName=NetD1_2 Pin=R4-1
+Removed Pin From Net: NetName=NetP4_1 Pin=R5-1
+Removed Pin From Net: NetName=VCC Pin=R7-2
+Removed Pin From Net: NetName=NetR1_2 Pin=T1-2
+Removed Pin From Net: NetName=GND Pin=T2-1
+Removed Pin From Net: NetName=NetD1_1 Pin=T2-2
+Removed Member From Class: ClassName=Sheet1 Member=T2
+Change component parameters: Designator = "R1" ("R1"); Footprint = "AXIAL-0.4"; UniqueID = "\HTJYCGWY" ("\HTJYCGWY")
+Change component parameters (AddParameter): Name = "Availability"; Value = "Warning"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "DigiKey-Purchase-URL"; Value = "https://snapeda.com/shop?store=DigiKey&id=3188341"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "MF"; Value = "TE Connectivity"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Mouser-Purchase-URL"; Value = "https://snapeda.com/shop?store=Mouser&id=3188341"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "MP"; Value = "CRGCQ1206J10K"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Package"; Value = "3115 TE Connectivity"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Price"; Value = "None"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "SnapEDA_Link"; Value = "https://www.snapeda.com/parts/CRGCQ1206J10K/TE%20Connectivity/view-part/3188341/?ref=snap"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Value"; Value = ""; VariantName = "[No Variations]"
+Change component parameters: Designator = "R2" ("R2"); Footprint = "AXIAL-0.4"; UniqueID = "\CKZOZFET" ("\CKZOZFET")
+Change component parameters (AddParameter): Name = "Availability"; Value = "Warning"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "DigiKey-Purchase-URL"; Value = "https://snapeda.com/shop?store=DigiKey&id=3188341"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "MF"; Value = "TE Connectivity"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Mouser-Purchase-URL"; Value = "https://snapeda.com/shop?store=Mouser&id=3188341"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "MP"; Value = "CRGCQ1206J10K"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Package"; Value = "3115 TE Connectivity"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Price"; Value = "None"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "SnapEDA_Link"; Value = "https://www.snapeda.com/parts/CRGCQ1206J10K/TE%20Connectivity/view-part/3188341/?ref=snap"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Value"; Value = ""; VariantName = "[No Variations]"
+Change component parameters: Designator = "R3" ("R3"); Footprint = "AXIAL-0.4"; UniqueID = "\ZRYUNMAU" ("\ZRYUNMAU")
+Change component parameters (AddParameter): Name = "Availability"; Value = "Warning"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "DigiKey-Purchase-URL"; Value = "https://snapeda.com/shop?store=DigiKey&id=3188341"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "MF"; Value = "TE Connectivity"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Mouser-Purchase-URL"; Value = "https://snapeda.com/shop?store=Mouser&id=3188341"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "MP"; Value = "CRGCQ1206J10K"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Package"; Value = "3115 TE Connectivity"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Price"; Value = "None"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "SnapEDA_Link"; Value = "https://www.snapeda.com/parts/CRGCQ1206J10K/TE%20Connectivity/view-part/3188341/?ref=snap"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Value"; Value = ""; VariantName = "[No Variations]"
+Change component parameters: Designator = "R4" ("R4"); Footprint = "AXIAL-0.4"; UniqueID = "\CUZWCSUM" ("\CUZWCSUM")
+Change component parameters (AddParameter): Name = "Availability"; Value = "Warning"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "DigiKey-Purchase-URL"; Value = "https://snapeda.com/shop?store=DigiKey&id=3188341"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "MF"; Value = "TE Connectivity"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Mouser-Purchase-URL"; Value = "https://snapeda.com/shop?store=Mouser&id=3188341"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "MP"; Value = "CRGCQ1206J10K"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Package"; Value = "3115 TE Connectivity"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Price"; Value = "None"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "SnapEDA_Link"; Value = "https://www.snapeda.com/parts/CRGCQ1206J10K/TE%20Connectivity/view-part/3188341/?ref=snap"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Value"; Value = ""; VariantName = "[No Variations]"
+Change component parameters: Designator = "R5" ("R5"); Footprint = "AXIAL-0.4"; UniqueID = "\ZOFZVBBD" ("\ZOFZVBBD")
+Change component parameters (AddParameter): Name = "Availability"; Value = "Warning"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "DigiKey-Purchase-URL"; Value = "https://snapeda.com/shop?store=DigiKey&id=3188341"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "MF"; Value = "TE Connectivity"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Mouser-Purchase-URL"; Value = "https://snapeda.com/shop?store=Mouser&id=3188341"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "MP"; Value = "CRGCQ1206J10K"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Package"; Value = "3115 TE Connectivity"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Price"; Value = "None"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "SnapEDA_Link"; Value = "https://www.snapeda.com/parts/CRGCQ1206J10K/TE%20Connectivity/view-part/3188341/?ref=snap"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Value"; Value = ""; VariantName = "[No Variations]"
+Change component parameters: Designator = "R6" ("R6"); Footprint = "AXIAL-0.4"; UniqueID = "\XJIZZCPI" ("\XJIZZCPI")
+Change component parameters (AddParameter): Name = "Availability"; Value = "Warning"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "DigiKey-Purchase-URL"; Value = "https://snapeda.com/shop?store=DigiKey&id=3188341"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "MF"; Value = "TE Connectivity"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Mouser-Purchase-URL"; Value = "https://snapeda.com/shop?store=Mouser&id=3188341"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "MP"; Value = "CRGCQ1206J10K"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Package"; Value = "3115 TE Connectivity"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Price"; Value = "None"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "SnapEDA_Link"; Value = "https://www.snapeda.com/parts/CRGCQ1206J10K/TE%20Connectivity/view-part/3188341/?ref=snap"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Value"; Value = ""; VariantName = "[No Variations]"
+Change component parameters: Designator = "R7" ("R7"); Footprint = "AXIAL-0.4"; UniqueID = "\QJTXIYAU" ("\QJTXIYAU")
+Change component parameters (AddParameter): Name = "Availability"; Value = "Warning"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "DigiKey-Purchase-URL"; Value = "https://snapeda.com/shop?store=DigiKey&id=3188341"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "MF"; Value = "TE Connectivity"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Mouser-Purchase-URL"; Value = "https://snapeda.com/shop?store=Mouser&id=3188341"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "MP"; Value = "CRGCQ1206J10K"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Package"; Value = "3115 TE Connectivity"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Price"; Value = "None"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "SnapEDA_Link"; Value = "https://www.snapeda.com/parts/CRGCQ1206J10K/TE%20Connectivity/view-part/3188341/?ref=snap"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Value"; Value = ""; VariantName = "[No Variations]"
+Added Component: Designator=Q2(SOT54A)
+Add component (AddParameter): Name = "Availability"; Value = "In Stock"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Check_prices"; Value = "https://www.snapeda.com/parts/BC557/Onsemi/view-part/?ref=eda"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "MF"; Value = "ON Semiconductor"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "MP"; Value = "BC557"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Package"; Value = "E-PKG AXIAL-LEADED-2 ON Semiconductor"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Price"; Value = "None"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Purchase-URL"; Value = "https://pricing.snapeda.com/search/part/BC557/?ref=eda"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "SnapEDA_Link"; Value = "https://www.snapeda.com/parts/BC557/Onsemi/view-part/?ref=snap"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Value"; Value = ""; VariantName = "[No Variations]"
+Added Pin To Net: NetName=NetD1_1 Pin=Q2-B
+Added Pin To Net: NetName=GND Pin=Q2-C
+Added Pin To Net: NetName=NetP2_1 Pin=R1-1
+Added Pin To Net: NetName=GND Pin=R3-1
+Added Pin To Net: NetName=NetP4_1 Pin=R4-1
+Added Pin To Net: NetName=VCC Pin=R4-2
+Added Pin To Net: NetName=NetD1_2 Pin=R7-1
+Added Pin To Net: NetName=NetR1_2 Pin=U1-5
+Added Pin To Net: NetName=NetQ2_E Pin=Q2-E
+Added Pin To Net: NetName=NetQ2_E Pin=R5-1
+Added Pin To Net: NetName=NetQ2_E Pin=R7-1
+Added Pin To Net: NetName=NetQ2_E Pin=U1-7
+Added Net: Name=NetQ2_E
+Added Pin To Net: NetName=NetR2_1 Pin=R2-1
+Added Pin To Net: NetName=NetR2_1 Pin=R3-2
+Added Pin To Net: NetName=NetR2_1 Pin=T1-2
+Added Net: Name=NetR2_1
+Added Member To Class: ClassName=Sheet1 Member=Component Q2 BC557

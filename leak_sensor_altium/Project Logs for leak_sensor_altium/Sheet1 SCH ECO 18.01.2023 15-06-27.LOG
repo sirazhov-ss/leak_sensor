@@ -1,0 +1,18 @@
+Change Component Footprint: Designator=R1 Old Footprint=RESC3115X65N New Footprint=AXIAL-0.4
+Change Component Footprint: Designator=R2 Old Footprint=RESC3115X65N New Footprint=AXIAL-0.4
+Change Component Footprint: Designator=R3 Old Footprint=RESC3115X65N New Footprint=AXIAL-0.4
+Change Component Footprint: Designator=R4 Old Footprint=RESC3115X65N New Footprint=AXIAL-0.4
+Change Component Footprint: Designator=R5 Old Footprint=RESC3115X65N New Footprint=AXIAL-0.4
+Change Component Footprint: Designator=R6 Old Footprint=RESC3115X65N New Footprint=AXIAL-0.4
+Change Component Footprint: Designator=R7 Old Footprint=RESC3115X65N New Footprint=AXIAL-0.4
+Change Component Comment: Designator=R1 Old Comment=2.4K New Comment=Res2
+Change Component Comment: Designator=R2 Old Comment=3K New Comment=Res2
+Change Component Comment: Designator=R6 Old Comment=5.6K New Comment=Res2
+Change Component Comment: Designator=R3 Old Comment=10K New Comment=Res2
+Change Component Comment: Designator=R4 Old Comment=10K New Comment=Res2
+Change Component Comment: Designator=R5 Old Comment=10K New Comment=Res2
+Change Component Comment: Designator=R7 Old Comment=10K New Comment=Res2
+Change Component Designator: OldDesignator=Q1 NewDesignator=T1
+Change Pin Designator/Name:  Old Designator=R6-2 Old Name=2 New Designator =1 New Name=1
+Change Pin Designator/Name:  Old Designator=R6-1 Old Name=1 New Designator =2 New Name=2
+Change Pin Designator/Name:  Old Designator=R7-2 Old Name=2 New Designator =1 New Name=1

@@ -7,23 +7,21 @@
 #include <avr/interrupt.h>
 
 int stop_key = 0;
-int lb = 0;
 int leak;
+int lb;
 int counter;
+int send = 0;
 
 
 void PIN_Init(void){
-	DDRD &= ~((1<<DDD3) | (1<<DDD2));
-	PORTD |= ((1<<PD3) | (1<<PD2));
-	GIMSK |= 1<<INT0;
-	MCUCR |= (1<<ISC01);
-	MCUCR &= ~(1<<ISC00);
+	DDRB &= ~((1<<PD3) | (1<<PD2));
+	PORTD &= ~((1<<PD3) | (1<<PD2));
 	GIMSK |= 1<<INT1;
-	MCUCR |= (1<<ISC11) | (1<<ISC10);
-	DDRA |= ((1<<DDA1) | (1<<DDA0));
+	MCUCR &= ~((1<<ISC11) | (1<<ISC10));
+	sei();
+	DDRA |= ((1<<PA1) | (1<<PA0));
 	PORTA &= ~((1<<PA1) | (1<<PA0));
 }
-
 
 void UART_Init(unsigned int baud){
 	UBRRH = (unsigned char)(baud>>8);
@@ -53,7 +51,6 @@ void send_message(char* message){
 }
 
 void BT_ON(void){
-	_delay_ms(1000);;
 	PORTA |= ((1<<PA1) | (1<<PA0));
 	
 }
@@ -62,31 +59,50 @@ void BT_OFF(void){
 	PORTA &= ~((1<<PA1) | (1<<PA0));
 }
 
-int get_state(){
+int get_state(int bit){
 	int state = -1;
-	if (~PIND & (1<<2)) {
+	if (~PIND & (1<<bit)) {
 		state = 1;
-		MCUCR |= 1<<ISC00;
 	}
 	else {
 		state = 0;
-		MCUCR &= ~(1<<ISC00);
 	}
 	return state;
 }
 
 ISR(INT0_vect){
+	MCUCR &= ~(1<<SE);
+	GIMSK &= ~(1<<INT0);
+	send = 1;
 	stop_key = 0;
 	counter = WAIT;
-	leak = get_state();
 	BT_ON();
 }
 
 ISR(INT1_vect){
+	MCUCR &= ~(1<<SE);
+	GIMSK &= ~(1<<INT1);
+	send = 1;
+	lb = 1;
 	stop_key = 0;
 	counter = WAIT;
-	lb = 1;
 	BT_ON();
+}
+
+ISR(WDT_OVERFLOW_vect){
+	PORTA |= (1<<PA0);
+	_delay_ms(200);
+	PORTA &= ~(1<<PA0);
+	if (PIND & (1<<2)) {
+		MCUCR &= ~(1<<SE);
+		WDTCR|=(1<<WDCE) | (1<<WDE);
+		WDTCR &= ~((1<<WDE) | (1<<WDIE));
+		send = 1;
+		stop_key = 0;
+		counter = WAIT;
+		BT_ON();
+	}
+	asm("wdr");
 }
 
 ISR(USART_RX_vect){
@@ -98,17 +114,18 @@ int main(void)
 	PIN_Init();
 	UART_Init(BAUDRATE);
 	char* response[2] = {"No leak!", "Leak is detected!"};
-	leak = get_state();
+	leak = get_state(2);
+	lb = get_state(3);
 	BT_ON();
+	send = 1;
 	while (1){
-		if (leak == 0 || leak == 1 || lb == 1){
+		if (send == 1) {
+			leak = get_state(2);
 			if (stop_key != '1' && counter == WAIT) {
-				if (leak == 0 || leak == 1) {
-					send_message(response[leak]);
-				}
 				if (lb == 1) {
 					send_message("Low battery!");
 				}
+				send_message(response[leak]);
 				if (counter <= 0) {
 					counter = WAIT;
 				}
@@ -117,8 +134,23 @@ int main(void)
 			if (stop_key == '1') {
 				BT_OFF();
 				leak = -1;
+				send = 0;
 				lb = 0;
+				if (~PIND & (1<<2)) {
+					MCUCR |= 1<<SE;
+					MCUCR|=(1<<SM1) | (1<<SM0);
+					WDTCR|=(1<<WDCE) | (1<<WDE);
+					WDTCR = (1<<WDIE) | (1<<WDP2) | (1<<WDP1) | (1<<WDP0);
+				}
+				else {
+					MCUCR |= 1<<SE;
+					MCUCR|=(1<<SM1) | (1<<SM0);
+					GIMSK|= 1<<INT0;
+					MCUCR &= ~((1<<ISC01) | (1<< ISC00));
+				}
+				
 			}
 		}
+		asm("sleep");
 	}
 }
