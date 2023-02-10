@@ -159,7 +159,6 @@ int main(void)
 					GIMSK|= 1<<INT0;
 					MCUCR &= ~((1<<ISC01) | (1<< ISC00));
 				}
-				
 			}
 		}
 		asm("sleep");
