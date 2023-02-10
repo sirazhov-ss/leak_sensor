@@ -1,26 +1,27 @@
 #define F_CPU 1000000UL
 #define BAUDRATE (F_CPU/(16*4800L))-1
-#define WAIT 100
+#define WAIT 10000
 #include <avr/io.h>
 #include <string.h>
 #include <util/delay.h>
 #include <avr/interrupt.h>
 
-int stop_key = 0;
+char stop_key;
 int leak;
 int lb;
 int counter;
-int send = 0;
+int send;
 
 
 void PIN_Init(void){
-	DDRB &= ~((1<<PD3) | (1<<PD2));
+	DDRD &= ~((1<<PD3) | (1<<PD2));
 	PORTD &= ~((1<<PD3) | (1<<PD2));
 	GIMSK |= 1<<INT1;
 	MCUCR &= ~((1<<ISC11) | (1<<ISC10));
 	sei();
 	DDRA |= ((1<<PA1) | (1<<PA0));
-	PORTA &= ~((1<<PA1) | (1<<PA0));
+	PORTA |= 1<<PA0;
+	PORTA &= ~(1<<PA1);
 }
 
 void UART_Init(unsigned int baud){
@@ -74,7 +75,7 @@ ISR(INT0_vect){
 	MCUCR &= ~(1<<SE);
 	GIMSK &= ~(1<<INT0);
 	send = 1;
-	stop_key = 0;
+	stop_key = '0';
 	counter = WAIT;
 	BT_ON();
 }
@@ -84,23 +85,26 @@ ISR(INT1_vect){
 	GIMSK &= ~(1<<INT1);
 	send = 1;
 	lb = 1;
-	stop_key = 0;
+	stop_key = '0';
 	counter = WAIT;
 	BT_ON();
 }
 
 ISR(WDT_OVERFLOW_vect){
-	PORTA |= (1<<PA0);
-	_delay_ms(200);
-	PORTA &= ~(1<<PA0);
-	if (PIND & (1<<2)) {
+	if (PIND & (1<<PD2)) {
 		MCUCR &= ~(1<<SE);
 		WDTCR|=(1<<WDCE) | (1<<WDE);
 		WDTCR &= ~((1<<WDE) | (1<<WDIE));
 		send = 1;
-		stop_key = 0;
+		stop_key = '0';
 		counter = WAIT;
 		BT_ON();
+	}
+	else{
+		for (int i=0; i<4; i++){
+			PORTA ^= 1<<PA0;
+			_delay_ms(200);
+		}
 	}
 	asm("wdr");
 }
@@ -114,9 +118,14 @@ int main(void)
 	PIN_Init();
 	UART_Init(BAUDRATE);
 	char* response[2] = {"No leak!", "Leak is detected!"};
-	leak = get_state(2);
+	_delay_ms(500);
 	lb = get_state(3);
-	BT_ON();
+	_delay_ms(500);
+	leak = get_state(2);
+	_delay_ms(500);
+	PORTA |= 1<<PA1;
+	stop_key = '0';
+	counter = WAIT;
 	send = 1;
 	while (1){
 		if (send == 1) {
@@ -126,17 +135,19 @@ int main(void)
 					send_message("Low battery!");
 				}
 				send_message(response[leak]);
-				if (counter <= 0) {
-					counter = WAIT;
-				}
 			}
+			if (counter <= 0) {
+					counter = WAIT;
+			}
+			else {
 			counter--;
+			}
 			if (stop_key == '1') {
 				BT_OFF();
 				leak = -1;
 				send = 0;
 				lb = 0;
-				if (~PIND & (1<<2)) {
+				if (~PIND & (1<<PD2)) {
 					MCUCR |= 1<<SE;
 					MCUCR|=(1<<SM1) | (1<<SM0);
 					WDTCR|=(1<<WDCE) | (1<<WDE);
