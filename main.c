@@ -1,6 +1,8 @@
 #define F_CPU 1000000UL
-#define BAUDRATE (F_CPU/(16*4800L))-1
+//#define BAUDRATE (F_CPU/(16*4800L))-1
+#define BAUDRATE (F_CPU/(16*4800L))
 #define WAIT 10000
+#define WAIT2 2
 #include <avr/io.h>
 #include <string.h>
 #include <util/delay.h>
@@ -15,13 +17,10 @@ int send;
 
 void PIN_Init(void){
 	DDRD &= ~((1<<PD3) | (1<<PD2));
-	PORTD &= ~((1<<PD3) | (1<<PD2));
-	GIMSK |= 1<<INT1;
-	MCUCR &= ~((1<<ISC11) | (1<<ISC10));
-	sei();
 	DDRA |= ((1<<PA1) | (1<<PA0));
-	PORTA |= 1<<PA0;
+	PORTD &= ~((1<<PD3) | (1<<PD2));
 	PORTA &= ~(1<<PA1);
+	PORTA |= 1<<PA0;
 }
 
 void UART_Init(unsigned int baud){
@@ -30,7 +29,6 @@ void UART_Init(unsigned int baud){
 	UCSRB = (1<<RXEN)|(1<<TXEN);
 	UCSRC = (1<<USBS)|(3<<UCSZ0);
 	UCSRB |= (1<<RXCIE);
-	sei();
 }
 
 void UART_Transmit(unsigned char data){
@@ -71,9 +69,16 @@ int get_state(int bit){
 	return state;
 }
 
+ISR(USART_RX_vect){
+	stop_key = UDR;
+}
+
 ISR(INT0_vect){
 	MCUCR &= ~(1<<SE);
+	WDTCR|=(1<<WDCE) | (1<<WDE);
+	WDTCR &= ~((1<<WDE) | (1<<WDIE));
 	GIMSK &= ~(1<<INT0);
+	GIMSK &= ~(1<<INT1);
 	send = 1;
 	stop_key = '0';
 	counter = WAIT;
@@ -82,26 +87,42 @@ ISR(INT0_vect){
 
 ISR(INT1_vect){
 	MCUCR &= ~(1<<SE);
+	WDTCR|=(1<<WDCE) | (1<<WDE);
+	WDTCR &= ~((1<<WDE) | (1<<WDIE));
+	GIMSK &= ~(1<<INT0);
 	GIMSK &= ~(1<<INT1);
 	send = 1;
-	lb = 1;
 	stop_key = '0';
 	counter = WAIT;
 	BT_ON();
 }
 
 ISR(WDT_OVERFLOW_vect){
-	if (PIND & (1<<PD2)) {
+	if ((PIND & (1<<PD2) && leak == 1) || (~PIND & (1<<PD2) && leak == 0) || (PIND & (1<<PD3) && lb == 1) || (~PIND & (1<<PD3) && lb == 0)) {
 		MCUCR &= ~(1<<SE);
 		WDTCR|=(1<<WDCE) | (1<<WDE);
 		WDTCR &= ~((1<<WDE) | (1<<WDIE));
+		GIMSK &= ~(1<<INT0);
+		GIMSK &= ~(1<<INT1);
 		send = 1;
 		stop_key = '0';
 		counter = WAIT;
 		BT_ON();
 	}
-	else{
+	if (~PIND & (1<<PD2) && PIND & (1<<PD3)){
 		for (int i=0; i<4; i++){
+			PORTA ^= 1<<PA0;
+			_delay_ms(200);
+		}
+	}
+	if (PIND & (1<<PD2) && ~PIND & (1<<PD3)){
+		for (int i=0; i<8; i++){
+			PORTA ^= 1<<PA0;
+			_delay_ms(200);
+		}
+	}
+	if (~PIND & (1<<PD2) && ~PIND & (1<<PD3)){
+		for (int i=0; i<16; i++){
 			PORTA ^= 1<<PA0;
 			_delay_ms(200);
 		}
@@ -109,56 +130,83 @@ ISR(WDT_OVERFLOW_vect){
 	asm("wdr");
 }
 
-ISR(USART_RX_vect){
-	stop_key = UDR;
-}
-
 int main(void)
 {
 	PIN_Init();
 	UART_Init(BAUDRATE);
-	char* response[2] = {"No leak!", "Leak is detected!"};
-	_delay_ms(500);
-	lb = get_state(3);
-	_delay_ms(500);
-	leak = get_state(2);
+	sei();
+	char* response[4] = {"No leak! & GB", "Leak is detected! & GB", "No leak! & LB", "Leak is detected! & LB"};
 	_delay_ms(500);
 	PORTA |= 1<<PA1;
+	_delay_ms(1000);
 	stop_key = '0';
 	counter = WAIT;
 	send = 1;
+	int counter2 = WAIT2;
 	while (1){
 		if (send == 1) {
 			leak = get_state(2);
-			if (stop_key != '1' && counter == WAIT) {
-				if (lb == 1) {
-					send_message("Low battery!");
+			lb = get_state(3);	
+			if (stop_key != '1' && counter == WAIT && counter2 == WAIT2) {
+				if (leak == 0 && lb == 0) {
+					send_message(response[0]);
 				}
-				send_message(response[leak]);
+				if (leak == 1 && lb == 0) {
+					send_message(response[1]);
+				}
+				if (leak == 0 && lb == 1) {
+					send_message(response[2]);
+				}
+				if (leak == 1 && lb == 1) {
+					send_message(response[3]);
+				}
 			}
 			if (counter <= 0) {
-					counter = WAIT;
+				counter = WAIT;
+				if (counter2 <= 0) {
+					counter2 = WAIT2;
+				}
+				else {
+					counter2--;
+				}
 			}
 			else {
-			counter--;
+				counter--;
 			}
 			if (stop_key == '1') {
 				BT_OFF();
-				leak = -1;
 				send = 0;
-				lb = 0;
-				if (~PIND & (1<<PD2)) {
+				if (PIND & (1<<PD2) && PIND & (1<<PD3)){
+					GIMSK |= 1<<INT1;
+					MCUCR &= ~((1<<ISC11) | (1<<ISC10));
+					GIMSK |= 1<<INT0;
+					MCUCR &= ~((1<<ISC01) | (1<<ISC00));
 					MCUCR |= 1<<SE;
-					MCUCR|=(1<<SM1) | (1<<SM0);
+					MCUCR |= (1<<SM0);
+				}
+				if (~PIND & (1<<PD2) && PIND & (1<<PD3)) {
+					GIMSK |= 1<<INT1;
+					MCUCR &= ~((1<<ISC11) | (1<<ISC10));
 					WDTCR|=(1<<WDCE) | (1<<WDE);
 					WDTCR = (1<<WDIE) | (1<<WDP2) | (1<<WDP1) | (1<<WDP0);
-				}
-				else {
 					MCUCR |= 1<<SE;
-					MCUCR|=(1<<SM1) | (1<<SM0);
-					GIMSK|= 1<<INT0;
-					MCUCR &= ~((1<<ISC01) | (1<< ISC00));
+					MCUCR |= (1<<SM0);
 				}
+				if (PIND & (1<<PD2) && ~PIND & (1<<PD3)) {
+					GIMSK |= 1<<INT0;
+					MCUCR &= ~((1<<ISC01) | (1<<ISC00));
+					WDTCR|=(1<<WDCE) | (1<<WDE);
+					WDTCR = (1<<WDIE) | (1<<WDP3);
+					MCUCR |= 1<<SE;
+					MCUCR |= (1<<SM0);
+				}
+				if (~PIND & (1<<PD2) && ~PIND & (1<<PD3)) {
+					WDTCR|=(1<<WDCE) | (1<<WDE);
+					WDTCR = (1<<WDIE) | (1<<WDP3) | (1<<WDP0);
+					MCUCR |= 1<<SE;
+					MCUCR |= (1<<SM0);
+				}
+				
 			}
 		}
 		asm("sleep");
